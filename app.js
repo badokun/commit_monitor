@@ -17,6 +17,10 @@ var buildUrl = function (settings) {
     return url;
 };
 
+fs = require('fs');
+var token = fs.readFileSync('authToken.txt', 'utf8');
+
+
 
 var app = express();
 
@@ -30,7 +34,7 @@ app.use(function (req, res, next) {
         text : JSON.stringify(req.body),
         //text : req.body.changeset.comment,
         channelId : "G02EPLD7T",
-        authToken: "xoxp-2360455121-2428143761-2499629497-334bad"
+        authToken: token
     }
 
     
