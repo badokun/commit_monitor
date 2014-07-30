@@ -11,8 +11,12 @@ var app = express();
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-    console.log(req.body); // populated!
+    console.log(req); // populated!
     next();
+});
+
+app.get('/get', function(req, res){
+   res.send(200) ;
 });
 
 app.post('/api', function (req, res) {
@@ -22,7 +26,7 @@ app.post('/api', function (req, res) {
     // ...
 });
 
-var server = app.listen(3000, function () {
+var server = app.listen(process.env.PORT, function () {
     console.log('Listening on port %d', server.address().port);
 });
 
