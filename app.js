@@ -1,9 +1,22 @@
 var application_root = __dirname,
     express = require("express"),
-    path = require("path");
+    path = require("path"),
+    rest = require('restler');
+
 
 var express = require('express');
 var bodyParser = require('body-parser');
+
+
+var buildUrl = function (settings) {
+    var url = 'https://slack.com/api/chat.postMessage?' +
+        'token=' + settings.authToken +
+        '&channel=' + settings.channelId +
+        '&text=' + settings.text;
+    console.log(url);
+    return url;
+};
+
 
 var app = express();
 
@@ -11,22 +24,37 @@ var app = express();
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-    console.log(req); // populated!
+    console.log(req.body); // populated!
+    
+    var settings = {
+        text : JSON.stringify(req.body),
+        //text : req.body.changeset.comment,
+        channelId : "G02EPLD7T",
+        authToken: "xoxp-2360455121-2428143761-2499629497-334bad"
+    }
+
+    
+rest.get(buildUrl(settings)).on('complete', function (result) {
+        if (result instanceof Error) {
+            console.log('Error:', result.message);
+            this.retry(5000); // try again after 5 sec
+        } else {
+            console.log(result);
+        }
+    });
+
     next();
 });
 
-app.get('/get', function(req, res){
-   res.send(200) ;
-});
-
 app.post('/api', function (req, res) {
-    var name = req.body.name,
-        color = req.body.color;
-    res.send(200);
-    // ...
+    res.status(200).end();
 });
 
-var server = app.listen(process.env.PORT, function () {
+
+//var port = process.env.PORT;
+var port = 3000;
+
+var server = app.listen(port, function () {
     console.log('Listening on port %d', server.address().port);
 });
 

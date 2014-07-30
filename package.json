@@ -1,0 +1,13 @@
+{
+  "name": "commit_monitor",
+  "version": "0.0.0",
+  "description": "commit_monitor",
+  "main": "app.js",
+  "author": {
+    "name": "hennovanrensburg",
+    "email": "henno_vanrensburg@monex.co.jp"
+  },
+  "dependencies": {
+    "restler": "^3.2.2"
+  }
+}
