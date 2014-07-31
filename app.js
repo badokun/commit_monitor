@@ -12,7 +12,7 @@ var buildUrl = function (settings) {
     var url = 'https://slack.com/api/chat.postMessage?' +
         'token=' + settings.authToken +
         '&channel=' + settings.channelId +
-        '&text=' + settings.text +
+        '&text=:scream:' + settings.text +
         '&username=Git Master';
     console.log(url);
     return url;
