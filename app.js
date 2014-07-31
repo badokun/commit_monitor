@@ -12,7 +12,8 @@ var buildUrl = function (settings) {
     var url = 'https://slack.com/api/chat.postMessage?' +
         'token=' + settings.authToken +
         '&channel=' + settings.channelId +
-        '&text=' + settings.text;
+        '&text=' + settings.text +
+        '&username=Git Master';
     console.log(url);
     return url;
 };
@@ -31,9 +32,11 @@ app.use(function (req, res, next) {
     console.log(req.body); // populated!
     
     var settings = {
-        text : JSON.stringify(req.body),
+        text : req.body.changeset.author + ' pushed to ' + req.body.changeset.branches + ' with comment [' +
+			req.body.changeset.comment + '] http://gitlab.trad.tradestation.com/insight/sometaro/commit/' + req.body.changeset.csid,
+//		JSON.stringify(req.body),
         //text : req.body.changeset.comment,
-        channelId : "G02EPLD7T",
+        channelId : "G02EQ8WRX",
         authToken: token
     }
 
